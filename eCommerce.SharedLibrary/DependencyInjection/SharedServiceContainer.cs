@@ -16,6 +16,7 @@ public static class SharedServiceContainer
         services.AddDbContext<TContext>(option => option.UseSqlServer(
             config.GetConnectionString("eCommerceConnection"), sqlserveroptions => 
                 sqlserveroptions.EnableRetryOnFailure()));
+        
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.Debug()
@@ -26,7 +27,7 @@ public static class SharedServiceContainer
                 rollingInterval: RollingInterval.Day)
             .CreateLogger(); 
             
-        JWTAuthenticationScheme.AddJWTAuthenticationScheme(services, config);
+        services.AddJWTAuthenticationScheme(config);
         
         return services;
     }
